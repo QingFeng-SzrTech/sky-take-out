@@ -101,6 +101,21 @@ public class EmployeeController {
         log.info("员工分页查询，参数为：{}", employeePageQueryDTO);
         PageResult pageResult = employeeService.pageQuery(employeePageQueryDTO);
         return Result.success(pageResult);
+    }
 
+    /**
+     * 启用禁用员工账号
+     * 前端传来的status是路径参数（url/{...}），用@PathVariable注解接收；
+     * 传来的id是请求参数（url?...），用@RequestParam（可省略）注解接收
+     * @param status
+     * @param id
+     * @return
+     */
+    @PostMapping("/status/{status}")
+    @ApiOperation("启用禁用员工账号")
+    public Result startOrStop(@PathVariable Integer status, Long id) {
+        log.info("启用禁用员工账号：{},{}", status, id);
+        employeeService.startOrStop(status, id);
+        return Result.success();
     }
 }
