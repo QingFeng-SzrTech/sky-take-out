@@ -4,6 +4,10 @@ import lombok.Data;
 
 import java.io.Serializable;
 
+/**
+ * 当前端提交的数据和实体类中对应的属性差别比较大时，建议使用DTO（数据传输对象）来封装数据
+ * 但当把数据传到持久层时，建议将DTO转为实体类
+ */
 @Data
 public class CategoryDTO implements Serializable {
 
