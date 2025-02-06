@@ -38,7 +38,16 @@ public interface EmployeeMapper {
 
     /**
      * 根据主键动态修改属性
+     * 启用禁用员工状态和修改员工等功能都会调用到此持久层方法
      * @param employee
      */
     void update(Employee employee);
+
+    /**
+     * 根据id查询员工信息
+     * @param id
+     * @return
+     */
+    @Select("select * from employee where id = #{id}")
+    Employee getById(Long id);
 }

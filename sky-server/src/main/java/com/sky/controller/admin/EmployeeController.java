@@ -107,6 +107,7 @@ public class EmployeeController {
      * 启用禁用员工账号
      * 前端传来的status是路径参数（url/{...}），用@PathVariable注解接收；
      * 传来的id是请求参数（url?...），用@RequestParam（可省略）注解接收
+     * 一般只有查询操作返回值才用Result<T>，其他操作返回值都用普通的Result即可
      * @param status
      * @param id
      * @return
@@ -116,6 +117,35 @@ public class EmployeeController {
     public Result startOrStop(@PathVariable Integer status, Long id) {
         log.info("启用禁用员工账号：{},{}", status, id);
         employeeService.startOrStop(status, id);
+        return Result.success();
+    }
+
+    /**
+     * 根据id查询员工信息
+     * 用于修改员工信息时的数据回显
+     * 这里返回值Result<T>里的泛型可用Employee也可用自定义的vo
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}")
+    @ApiOperation("根据id查询员工信息")
+    public Result<Employee> getById(@PathVariable Long id) {
+        Employee employee = employeeService.getById(id);
+        return Result.success(employee);
+    }
+
+    /**
+     * 编辑员工信息
+     * 用于修改员工信息时的编辑信息
+     * 前端传来的是Body中的JSON数据，用封装类接收，可以用Employee也可用EmployeeDTO
+     * @param employeeDTO
+     * @return
+     */
+    @PutMapping
+    @ApiOperation("编辑员工信息")
+    public Result update(@RequestBody EmployeeDTO employeeDTO) {
+        log.info("编辑员工信息：{}", employeeDTO);
+        employeeService.update(employeeDTO);
         return Result.success();
     }
 }
